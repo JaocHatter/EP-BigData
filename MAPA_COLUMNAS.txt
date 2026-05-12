@@ -1,0 +1,36 @@
+
+MAPA DE COLUMNAS - anemia_hadoop.csv
+=====================================
+Total registros: 59,225
+Total columnas:  22
+
+POS | COLUMNA                        | TIPO        | EJEMPLO
+----|--------------------------------|-------------|------------------------
+0   | PK_REGISTRO                    | int64      | 1
+1   | FECHA_REGISTRO                 | object     | 20180810
+2   | GENERO                         | object     | M
+3   | EDAD_REGISTRO                  | int64      | 5
+4   | TIPO_EDAD                      | object     | A
+5   | ETNIA                          | object     | Mestizo
+6   | F_ATENCION                     | object     | 20180810
+7   | GRADO_SEVERIDAD                | object     | MOD
+8   | DIAGNOSTICO                    | object     | ANEMIA POR DEFICIENCIA DE HIERRO SIN ESPECIFICACION
+9   | TIPO_DIAGNOSTICO               | object     | D
+10  | DESCRIPCION_FINANCIADOR        | object     | S.I.S
+11  | CANTIDAD                       | int64      | 1
+12  | PROVINCIA                      | object     | MARISCAL CACERES
+13  | DEPARTAMENTO                   | object     | SAN MARTIN
+14  | DISTRITO                       | object     | HUICUNGO
+15  | RED                            | object     | MARISCAL CACERES
+16  | MICRORED                       | object     | HUICUNGO
+17  | NOMBRE_ESTABLECIMIENTO         | object     | PIZARRO
+18  | CODIGO_UNICO                   | int64      | 6571
+19  | LONGITUD                       | float64    | -76.98517234
+20  | LATITUD                        | float64    | -7.25018005
+21  | FECHA_CORTE                    | object     | 20250424
+
+USO EN JAVA MAPREDUCE:
+======================
+String[] campos = value.toString().split(",");
+String provincia = campos[12];              // PROVINCIA
+int edad = Integer.parseInt(campos[3]);     // EDAD_REGISTRO
