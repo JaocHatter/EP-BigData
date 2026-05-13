@@ -11,6 +11,7 @@ HDFS_INPUT   = $(HDFS_BASE)/input
 HDFS_OUT     = $(HDFS_BASE)/output
 HDFS_INT     = $(HDFS_BASE)/intermediate
 DATA_FILE    = src/resources/anemia_hadoop.tsv
+BLOCK_SIZE   = 4194304
 
 BLUE  = \033[0;34m
 GREEN = \033[0;32m
@@ -49,6 +50,18 @@ start:
 	hadoop fs -mkdir -p $(HDFS_INPUT)
 	hadoop fs -put -f $(DATA_FILE) $(HDFS_INPUT)/
 	@echo "$(GREEN)Dataset disponible en $(HDFS_INPUT)/$(NC)"
+
+# Subir datos en bloques (para observar paralelismo)
+
+start_blocks:
+	@echo "$(BLUE)Creando directorios en HDFS y subiendo dataset...$(NC)"
+	hadoop fs -mkdir -p $(HDFS_INPUT)
+	hadoop fs -rm -f $(HDFS_INPUT)/anemia_hadoop.tsv
+	hadoop fs -D dfs.blocksize=$(BLOCK_SIZE) -put $(DATA_FILE) $(HDFS_INPUT)/
+	@echo "$(GREEN)Dataset disponible en $(HDFS_INPUT)/ con bloques de 4MB$(NC)"
+	@echo "$(GREEN)Bloques físicos:$(NC)"
+	hdfs fsck $(HDFS_INPUT)/anemia_hadoop.tsv -files -blocks
+
 
 # ── Limpiar salidas HDFS ───────────────────────────────────────────────────
 hdfs-clean:
